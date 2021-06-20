@@ -1,22 +1,53 @@
-const { JWT_SECRET } = require('../secrets/secret');
-const jwt = require("jsonwebtoken");
 
-const restricted = (req, res, next) => {
-  const token = req.headers.authorization;
-  if (token) {
-    jwt.verify(token, JWT_SECRET, (err, decoded) => {
-      if (err) {
-        res.status(401).json({ message: "Token invalid" });
-      } else {
-        req.decodedJwt = decoded;
-        next();
-      }
-    });
-  } else {
-    res.status(401).json({ message: "Token required" });
-  }
-};
+const User = require('../auth/auth-model')
+const bcrypt = require('bcryptjs')
+
+const checkUserNameExists = (req, res, next) => {
+const {username} = req.body;
+try{
+const user =  User.findBy({username: username});
+if (!user){
+    res.status(401).json({message:"username taken"})
+}else{
+    next()
+}
+}catch(err){
+  next(err)
+}
+}
+
+const checkUserName = (req, res, next) => {
+const {username,password} = req.body
+User.findBy({username})
+.then(([user]) => {
+    if(user && bcrypt.compareSync(password,user.password)){
+        next()
+    }else{
+        res.status(401).json({message:"invalid credentials"})
+    }
+})  
+
+}
+
+
+const validateBody = (req, res, next) => {
+const {username} = req.body;
+try{
+ if (username === undefined || username.trim() === ''){
+     req.body.username
+     next()
+ }else{
+     req.body.username = username.trim()
+     next()
+ }
+}catch(err){
+next(err)
+}
+}
+
 
 module.exports = {
-  restricted
-};
+    checkUserNameExists,
+    checkUserName,
+    validateBody
+}

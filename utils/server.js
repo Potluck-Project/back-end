@@ -16,6 +16,9 @@ server.use(express.json())
 server.use('/api/auth', authRouter)
 // server.use('/api/event',eventRouter)
 
+server.get('/', (req, res,next)=>{
+  res.send('<h1>Welcome to potluck app</h1>')
+})
 
 
 server.use((err, req, res, next) => {

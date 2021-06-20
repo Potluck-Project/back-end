@@ -3,9 +3,9 @@ const cors = require('cors')
 const helmet = require('helmet')
 
 const authRouter = require('../api/auth/auth-router')
-const eventRouter = require('../api/event/event-router')
+// const eventRouter = require('../api/event/event-router')
 
-const server = express
+const server = express()
 
 server.use(helmet())
 
@@ -14,7 +14,7 @@ server.use(cors())
 server.use(express.json()) 
 
 server.use('/api/auth', authRouter)
-server.use('/api/event',eventRouter)
+// server.use('/api/event',eventRouter)
 
 
 

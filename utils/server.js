@@ -4,6 +4,7 @@ const helmet = require('helmet')
 
 const authRouter = require('../api/auth/auth-router')
 // const eventRouter = require('../api/event/event-router')
+const userRouter = require('../api/user/user-router')
 
 const server = express()
 
@@ -15,6 +16,7 @@ server.use(express.json())
 
 server.use('/api/auth', authRouter)
 // server.use('/api/event',eventRouter)
+server.use('/api/user', userRouter)
 
 server.get('/', (req, res,next)=>{
   res.send('<h1>Welcome to potluck app</h1>')

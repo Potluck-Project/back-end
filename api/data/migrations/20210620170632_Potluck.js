@@ -13,7 +13,6 @@ exports.up = function(knex) {
       tbl.string('event_name',128).notNullable()
       tbl.string('event_date',128).notNullable()
       tbl.string('event_time',128).notNullable()
-      tbl.string('event_location',128).notNullable()
       tbl.string('event_state',128).notNullable()
       tbl.string('event_city',128).notNullable()
       tbl.string('event_zip',128).notNullable()

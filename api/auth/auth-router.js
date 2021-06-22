@@ -7,16 +7,16 @@ const {checkUserNameExists,validateBody,checkUserName} = require('./auth-middlew
 
 router.post('/register',checkUserNameExists,validateBody, (req, res,next) => {
   
-  
+  console.log("POSTpreHASH",req.body)
   let user = req.body
   const rounds = process.env.BCRYPT_ROUNDS || 8
   const hash = bcrypt.hashSync(user.password,rounds)
-
+console.log("Post Hash",req.body)
   user.password = hash
-
+console.log("user password reassigned",user)
   User.add(user)
-  .then(user => {
-    res.json(user)
+  .then(newUser => {
+    res.json(newUser)
   })
   .catch(next)
 

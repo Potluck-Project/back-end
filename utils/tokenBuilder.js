@@ -5,7 +5,10 @@ const {JWT_SECRET} = require('../secret/index')
 function tokenBuilder(user){
     const payload = {
 subject: user.user_id,
-username:user.username
+username:user.username,
+password:user.password,
+email:user.email,
+is_organizer: false
     }
     const options = {
 expiresIn:'1d'

@@ -17,6 +17,13 @@ exports.up = function(knex) {
       tbl.string('event_city',128).notNullable()
       tbl.string('event_zip',128).notNullable()
       tbl.string('event_street_address',128).notNullable()
+      tbl.integer('event_organizer')
+      .notNullable()
+      .unsigned()
+      .references('user_id')
+      .inTable('users')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
   })
   .createTable('items', tbl => {
       tbl.increments('item_id')

@@ -2,7 +2,7 @@ const router = require('express').Router()
 const User = require('./user-model')
 
 
-router.get('/users', (req, res, next) => {
+router.get('/', (req, res, next) => {
     User.find()
     .then((user) =>{
         res.json(user)

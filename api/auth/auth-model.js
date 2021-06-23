@@ -5,6 +5,7 @@ function find() {
 }
 
 function findBy(filter) {
+  console.log(filter);
   return db("users").where(filter);
 }
 
@@ -18,15 +19,14 @@ async function findByUsername(username) {
 }
 
 async function add(user) {
-  console.log("ADD ACTIVE");
-  const user_id = await db("users").insert(user);
-  console.log("USER_ID", user_id);
-  return findByUsername(user.username);
+  const [user_id] = await db("users").insert(user, "user_id");
+  return findById( user_id );
 }
 
 module.exports = {
   find,
   findBy,
+  findByUsername,
   findById,
   add,
 };

@@ -10,7 +10,7 @@ router.get("/", restricted, (req, res, next) => {
     .then((Events) => {
       res.json(Events);
     })
-    .catch((err) => next(err));
+    .catch(next);
 });
 
 router.get("/:event_id", restricted, (req, res, next) => {
@@ -23,17 +23,37 @@ router.get("/:event_id", restricted, (req, res, next) => {
     .catch(next);
 });
 
-router.get("/:event_key/:condition", (req, res,next) => {
-  let str = req.params.condition.split("_").join(" ");
-  const matchingObj = {
-    [req.params.event_key]: str
-  };
-  Event.findBy(matchingObj)
-    .then((eventObj) => res.json(eventObj))
+
+
+router.delete("/:event_id", restricted, (req, res, next) => {
+  Event.remove(req.params.event_id)
+    .then(() => {
+      res.json({ message: "Event has been deleted" });
+    })
     .catch(next);
 });
 
-//!  MIDDLEWARE TO VERIFY KEYS 
+router.post("/", restricted, (req, res, next) => {
+  Event.add(req.body, req.params.event_id)
+    .then((addEvent) => {
+      res.status(201).json(addEvent);
+    })
+    .catch(next);
+});
+
+router.put("/:event_id", restricted, (req, res, next) => {
+  Event.update(req.params.event_id, req.body)
+    .then((event) => {
+      if (!event) {
+        res.status(404).json({ message: "Could not find event with given ID" });
+      } else {
+        res.status(201).json(event);
+      }
+    })
+    .catch(next);
+});
+
+//!  MIDDLEWARE TO VERIFY KEYS
 //!  IF USER PUTS IN SAN FANSCICO INSTEAD OF SAN FRANCISCO
 
 module.exports = router;

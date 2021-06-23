@@ -6,12 +6,14 @@ async function find() {
     .select("events.*", "u.username as event_organizer");
   const users = await db("attendees as at")
     .leftJoin("users as u", "at.user_id", "u.user_id")
-    .select("at.*", "u.user_id", "u.username", "u.email", "u.is_organizer");
-  const items = await db("event_items").leftJoin(
+    .select("at.*", "u.user_id", "u.username", "u.email")
+  const items = await db("event_items as e").leftJoin(
     "items as i",
-    "event_items.item_id",
+    "e.item_id",
     "i.item_id"
-  );
+  ).leftJoin('user_brings as ub', 'ub.event_item_id', 'e.event_item_id')
+  .leftJoin('users as u', 'u.user_id', 'ub.user_id')
+  .select('e.*', 'i.*', 'u.username')
 
   let grouped_events = {};
 
@@ -29,7 +31,6 @@ async function find() {
       user_id: user.user_id,
       username: user.username,
       email: user.email,
-      is_organizer: user.is_organizer,
       confirmed: user.confirmed,
     };
 
@@ -50,42 +51,52 @@ async function find() {
   return finalData;
 }
 
-// Previous Version
-// function find() {
-//   return db("events as e")
-//     .leftJoin("event_items as ei", "ei.event_id", "e.event_id")
-//     .leftJoin("attendees as a", "a.event_id", "e.event_id")
-//     .leftJoin("users as u", "u.user_id", "a.user_id")
-//     .leftJoin("items as i", "i.item_id", "ei.item_id" );
-// }
 
-async function findBy(adam) {
-  const events = db("events").where(adam);
+async function findBy(filter) {
+  const events = db("events").where(filter);
   return events;
 }
 
 async function findById(event_id) {
-  console.log(event_id);
+ 
   const event = await db("events").where({ event_id }).first();
-  const attendees = await db("attendees").where({ event_id})
-  .leftJoin('users as u','u.user_id','attendees.user_id')
-  .select('attendees.*','u.username','u.email','u.is_organizer')
+  const attendees = await db("attendees")
+    .where({ event_id })
+    .leftJoin("users as u", "u.user_id", "attendees.user_id")
+    .select("attendees.*", "u.username", "u.email")
   const item = await db("items as i")
-  return attendees;
-   
+  .leftJoin('event_items as e', "e.item_id", "i.item_id")
+  .leftJoin('user_brings as ub', 'ub.event_item_id', 'e.event_item_id')
+  .leftJoin('users as u', 'u.user_id', 'ub.user_id')
+  .select('e.*', 'i.*', 'u.username')
+  event.attendees = attendees;
+  event.items = item;
+  return event;
 }
 
-function add() {
-  return db("events");
+async function add(newInfo) {
+  const [event_id] = await db("events").insert(newInfo,"event_id");
+ 
+  return db('events').where({event_id}).first()
 }
 
+async function update(event_id, updatedInfo) {
+  await db("events")
+    .where({ event_id })
+    .update(updatedInfo
+    );
+  return findById(event_id);
+}
 
+function remove(event_id) {
+  return db("events").where({ event_id }).del();
+}
 
 module.exports = {
   add,
   find,
   findBy,
   findById,
-  // update,
-  // delete
+  update,
+  remove,
 };

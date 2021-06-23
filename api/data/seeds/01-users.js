@@ -6,32 +6,28 @@ exports.seed = function (knex) {
       user_id: 1,
       username: "Adam",
       email: "humbleadam@gmail.com",
-      password: bcrypt.hashSync("password", 8),
-      is_organizer: false,
+      password: bcrypt.hashSync("password", 8)
     },
 
     {
       user_id: 2,
       username: "Ryan",
       email: "dillpickle23@gmail.com",
-      password: bcrypt.hashSync("password", 8),
-      is_organizer: false,
+      password: bcrypt.hashSync("password", 8)
     },
 
     {
       user_id: 3,
       username: "Kazden",
       email: "kazden@gmail.com",
-      password: bcrypt.hashSync("password", 8),
-      is_organizer: false,
+      password: bcrypt.hashSync("password", 8)
     },
 
     {
       user_id: 4,
       username: "Marius",
       email: "marius@gmail.com",
-      password: bcrypt.hashSync("password", 8),
-      is_organizer: false,
+      password: bcrypt.hashSync("password", 8)
     },
   ]);
 };

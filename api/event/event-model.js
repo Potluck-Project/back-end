@@ -48,7 +48,6 @@ async function find() {
   }
 
   return finalData;
- 
 }
 
 // Previous Version
@@ -60,21 +59,33 @@ async function find() {
 //     .leftJoin("items as i", "i.item_id", "ei.item_id" );
 // }
 
-function findBy(filter) {
-  return db("events");
+async function findBy(adam) {
+  const events = db("events").where(adam);
+  return events;
 }
 
-function findById(event_id) {
-  return db("events");
+async function findById(event_id) {
+  console.log(event_id);
+  const event = await db("events").where({ event_id }).first();
+  const attendees = await db("attendees").where({ event_id})
+  .leftJoin('users as u','u.user_id','attendees.user_id')
+  .select('attendees.*','u.username','u.email','u.is_organizer')
+  const item = await db("items as i")
+  return attendees;
+   
 }
 
 function add() {
   return db("events");
 }
 
+
+
 module.exports = {
   add,
   find,
   findBy,
   findById,
+  // update,
+  // delete
 };

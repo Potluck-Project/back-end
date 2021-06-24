@@ -8,7 +8,6 @@ subject: user.user_id,
 username:user.username,
 password:user.password,
 email:user.email,
-is_organizer: false
     }
     const options = {
 expiresIn:'1d'

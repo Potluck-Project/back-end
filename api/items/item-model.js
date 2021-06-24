@@ -22,12 +22,13 @@ async function addItem(newItem){
 }
 
 async function addItemToEvent(event_id){
- 
+
+
 
 }
 
 function removeItemFromEvent(event_id){
-
+return db("event_items").where({event_id}).del()
 }
 
 module.exports = {

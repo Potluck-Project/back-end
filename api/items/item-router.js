@@ -23,7 +23,7 @@ Item.findById(req.params.item_id)
 
 
 router.post('/', restricted, (req, res, next) => {
-Item.addItem(req.body, req.params.event_id)
+Item.addItem(req.body, req.params.item_id)
  .then((item) => {
      if (!item) {
          res.status(404).json({ message: "Could not find item with given ID"})
@@ -37,11 +37,17 @@ router.post('/:event_id', restricted, (req, res, next) =>{
 
 })
 
-router.delete('/', restricted, (req, res, next) => {
-
+router.delete('/:event_id', restricted, (req, res, next) => {
+Item.rem(req.params.event_id, req.body)
+.then((event)=> {
+    if(!event){
+        res.status(404).json({ message: "Could not find event with given ID" })
+    }else{
+        res.status(201).json(event)
+    }
 })
-
-
+.catch(next)
+})
 
 
 

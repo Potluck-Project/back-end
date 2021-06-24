@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "knex migrate:rollback && knex migrate:latest && knex seed:run && node index.js",
+    "reset": "knex migrate:rollback && knex migrate:latest && knex seed:run",
     "server": "node index.js",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",

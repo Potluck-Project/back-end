@@ -19,13 +19,13 @@ server.use("/api/auth", authRouter);
 server.use("/api/event", eventRouter);
 server.use("/api/user", userRouter);
 server.use("/api/item", itemRouter);
-
+//eslint-disable-next-line
 server.get("/", (req, res, next) => {
   res.send("<h1>Welcome to potluck app</h1>");
 });
-
+ //eslint-disable-next-line
 server.use((err, req, res, next) => {
-  //eslint-disable-line
+  
   res.status(err.status || 500).json({
     message: err.message,
     stack: err.stack,

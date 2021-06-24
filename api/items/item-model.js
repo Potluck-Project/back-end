@@ -1,5 +1,5 @@
 const db = require("../data/dbConfig");
-const Event = require('../event/event-model')
+// const Event = require('../event/event-model')
 
  function find() {
      return db('items')
@@ -21,11 +21,11 @@ async function addItem(newItem){
  return db('items').where({item_id}).first()
 }
 
-async function addItemToEvent(event_id){
+// async function addItemToEvent(){
 
 
 
-}
+// }
 
 function removeItemFromEvent(event_id){
 return db("event_items").where({event_id}).del()
@@ -36,6 +36,6 @@ module.exports = {
     findBy,
     findById,
     addItem,
-    addItemToEvent,
+    // addItemToEvent,
     removeItemFromEvent,
 }

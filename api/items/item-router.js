@@ -21,7 +21,7 @@ Item.findById(req.params.item_id)
  .catch(next)
 })
 
-
+//eslint-disable-next-line
 router.post('/', restricted, (req, res, next) => {
 Item.addItem(req.body, req.params.item_id)
  .then((item) => {
@@ -32,10 +32,10 @@ Item.addItem(req.body, req.params.item_id)
      }
  })
 })
+//eslint-disable-next-line
+// router.post('/:event_id', restricted, (req, res, next) =>{
 
-router.post('/:event_id', restricted, (req, res, next) =>{
-
-})
+// })
 
 router.delete('/:event_id', restricted, (req, res, next) => {
 Item.rem(req.params.event_id, req.body)

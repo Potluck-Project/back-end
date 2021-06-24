@@ -1,7 +1,10 @@
 const router = require("express").Router();
 const User = require("./user-model");
+const {
+  restricted
+} = require("../event/event-middleware");
 
-router.get("/", (req, res, next) => {
+router.get("/", restricted, (req, res, next) => {
   User.find()
     .then((user) => {
       res.json(user);
@@ -9,7 +12,7 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
-router.get("/:user_id", (req, res, next) => {
+router.get("/:user_id", restricted, (req, res, next) => {
   User.findById(req.params.user_id)
     .then((user) => {
       res.json(user);
@@ -18,7 +21,7 @@ router.get("/:user_id", (req, res, next) => {
 });
 
 
-router.post("/", (req, res, next) => {
+router.post("/", restricted, (req, res, next) => {
 User.addToEvent(req.body)
 .then(user => {
   res.json(user)
@@ -26,7 +29,7 @@ User.addToEvent(req.body)
 .catch(next);
 })
 
-router.post("/:attendees_id", (req, res, next) => {
+router.post("/:attendees_id", restricted, (req, res, next) => {
 User.addForconfirm(req.params)
 .then(user => {
   res.json(user)

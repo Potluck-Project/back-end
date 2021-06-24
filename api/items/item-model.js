@@ -1,4 +1,5 @@
 const db = require("../data/dbConfig");
+const Event = require('../event/event-model')
 
  function find() {
      return db('items')
@@ -14,15 +15,18 @@ return db("items")
 .first()
 }
 
-async function addItem(){
-const [item_id] = await db("items")
+async function addItem(newItem){
+ const [item_id] = await db("items").insert(newItem, "item_id")
+
+ return db('items').where({item_id}).first()
 }
 
 async function addItemToEvent(event_id){
+ 
 
 }
 
-function removeItemFromEvent(){
+function removeItemFromEvent(event_id){
 
 }
 

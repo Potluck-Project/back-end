@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "reset": "knex migrate:rollback && knex migrate:latest && knex seed:run",
+    "start": "node index.js",
     "server": "node index.js",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",

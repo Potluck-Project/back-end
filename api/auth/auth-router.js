@@ -36,6 +36,7 @@ router.post("/login", checkUserName, (req, res, next) => {
       res.status(200).json({
         message: `welcome, ${user.username}`,
         token,
+        user_id: user.user_id,
       });
     })
     .catch(next);

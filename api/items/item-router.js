@@ -33,9 +33,15 @@ Item.addItem(req.body, req.params.item_id)
  })
 })
 //eslint-disable-next-line
-// router.post('/:event_id', restricted, (req, res, next) =>{
-
-// })
+router.post('/:event_id/:item_id', restricted, (req, res, next) =>{
+const {item_id, event_id} = req.params
+const {quantity} = req.body
+Item.addItemToEvent(item_id, event_id, quantity)
+.then((item) => {
+res.status(201).json(item)
+})
+.catch(next)
+})
 
 router.delete('/:event_id', restricted, (req, res, next) => {
 Item.rem(req.params.event_id, req.body)

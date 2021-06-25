@@ -21,11 +21,10 @@ async function addItem(newItem){
  return db('items').where({item_id}).first()
 }
 
-// async function addItemToEvent(){
-
-
-
-// }
+async function addItemToEvent(item_id, event_id, quantity){
+const [event_item_id] = await db('event_items').insert({item_id, event_id, quantity}, 'event_item_id')
+return db('event_items').where({event_item_id})
+}
 
 function removeItemFromEvent(event_id){
 return db("event_items").where({event_id}).del()
@@ -36,6 +35,6 @@ module.exports = {
     findBy,
     findById,
     addItem,
-    // addItemToEvent,
+    addItemToEvent,
     removeItemFromEvent,
 }

@@ -171,3 +171,58 @@
 | `Authorization` | `string` | **Required**. Your Authorization |
 
 ---------------------------------------------------------
+
+#### Get All Items
+```http
+  GET /api/item
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `Authorization` | `string` | **Required**. Your Authorization |
+
+---------------------------------------------------------
+
+#### Get by Item ID
+```http
+  GET /api/item/:item_id
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `Authorization` | `string` | **Required**. Your Authorization |
+
+---------------------------------------------------------
+
+#### Post new Item to Item Table
+```http
+  POST /api/item
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `Authorization` | `string` | **Required**. Your Authorization |
+
+---------------------------------------------------------
+
+#### Post item from item table into Event table
+```http
+  POST /api/item/:event_id/:item_id
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `Authorization` | `string` | **Required**. Your Authorization |
+
+---------------------------------------------------------
+
+#### Delete item from Event table
+```http
+  POST /api/item/:event_id/
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `Authorization` | `string` | **Required**. Your Authorization |
+
+---------------------------------------------------------

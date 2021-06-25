@@ -16,6 +16,7 @@ const checkUserNameExists = (req, res, next) => {
 const checkUserName = (req, res, next) => {
   const { username, password } = req.body;
   User.findBy({ username }).then(([user]) => {
+    console.log("HEY RIGHT HERE!",user,user.password,user.username)
     if (user && bcrypt.compareSync(password, user.password)) {
       next();
     } else {

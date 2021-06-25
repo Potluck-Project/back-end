@@ -34,7 +34,7 @@ router.delete("/:event_id", restricted, (req, res, next) => {
 });
 
 router.post("/", restricted, (req, res, next) => {
-  Event.add(req.body, req.params.event_id)
+  Event.add(req.body)
     .then((addEvent) => {
       res.status(201).json(addEvent);
     })
